@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import  numpy as np
 
 class plotter_class:
 
@@ -9,6 +10,9 @@ class plotter_class:
         self.ax1=self.fig.add_subplot(row,col,1)
         plt.tight_layout(pad=4, w_pad=5, h_pad=6)
         plt.draw()
+
+    def spaceX(self, y):
+        return np.linspace(0,y.size-1,y.size)
 
     def plot_signal(self, pos=1, x=1, y=1, title="", xLabel="", yLabel="", about='',trace='.',center=0,zoom=0):
         ax=self.fig.add_subplot(self.row,self.col,pos)
