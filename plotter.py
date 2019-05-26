@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import  numpy as np
+from  dft  import *
+
+dft_c = dft_class     ( )       #objeto para analisis de espectro
 
 class plotter_class:
 
@@ -84,5 +87,9 @@ class plotter_class:
 
     def plot_close(self):
         plt.close()
+
+    def plot_dft_signal(self, pos, fs, signal, title="", xLabel="", yLabel="", about='',trace='.',center=0,zoom=0):
+        fft ,freq  = dft_c.abs ( fs ,signal.size  ,signal)
+        self.plot_signal(pos ,freq ,fft ,title ,xLabel ,yLabel ,about ,trace ,center ,zoom)
 
 

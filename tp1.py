@@ -1,34 +1,28 @@
 import  numpy   as np
 from    plotter import *
-from    dft     import *
 from    filter  import *
-from    dft     import *
 
 fs    = 20                      #frecuencia de sampleo de la senial
 pl    = plotter_class ( 2,2 )   #objeto para generar un grafico de 2x2
-dft_c = dft_class     ( )       #objeto para analisis de espectro
 f     = filter_class  ( )       #objero para funciones de filtrado
 
 signal = np.load('signalLowSNR.npy')        #lee la senial a decodidicar
 #signal = np.load('signal.npy')
-signal=signal[:2560*2]                      #tomo una pocrion para debug, luego comentar
+signal=signal[:2560*1]                      #tomo una pocrion para debug, luego comentar
 pl.plot_signal  ( 1 ,pl.spaceX(signal) ,signal ,'signal' ,'time' ,'volt' ,trace='-' )
 
 pulse  = np.load('pulse.npy')               #cargo el pulso original para plotearlo
 pl.plot_signal  ( 2 ,pl.spaceX(pulse)  ,pulse  ,'pulse'  ,'time' ,'volt' ,trace='-' )
 
-fft ,freq  = dft_c.abs ( fs ,signal.size  ,signal); #tomo la dft de la senial para verla
-pl.stem_signal ( 3 ,freq[1:] ,fft[1:] ,'dft signal' ,'frecuencia' ,'Pnormal.')
-
-fft ,freq  = dft_c.abs ( fs ,pulse.size  ,pulse);   #tomo la dft del pulso para verlo
-pl.stem_signal ( 4 ,freq     ,fft     ,'dft pulse'  ,'frecuencia' ,'Pnormal.')
+pl.plot_dft_signal ( 3 ,fs ,signal ,'dft signal' ,'Hz' ,'Pnormal' ,trace='-' ,center=signal.size//2 ,zoom=signal.size//2-1)
+pl.plot_dft_signal ( 4 ,fs ,pulse  ,'dft pulse'  ,'Hz' ,'Pnormal' ,trace='-')
 #========================================================================
 pl    = plotter_class ( 2,2 )       #nuevo grafico
 
 hipass = np.load("hipass_fir.npz")['ba'][0]     #leo los parametros del pasabajo 
 lopass = np.load("lopass_fir.npz")['ba'][0]     # y pasaaltos diseniados
-pl.plot_signal ( 1 ,pl.spaceX(hipass ) ,hipass ,'Hipass h(n)' ,'n' ,'amp' ,trace='-' )
-pl.plot_signal ( 2 ,pl.spaceX(lopass ) ,lopass ,'Lopass h(n)' ,'n' ,'amp' ,trace='-' )
+pl.plot_dft_signal ( 1 ,fs,hipass,'Hipass H(n)' ,'Hz' ,'amp' ,trace='-' )
+pl.plot_dft_signal ( 2 ,fs,lopass,'Lopass H(n)' ,'Hz' ,'amp' ,trace='-' )
 
 signal = f.fir ( signal ,hipass )               #aplico el filtrado a la senial y la muestro
 signal = f.fir ( signal ,lopass )
@@ -37,8 +31,7 @@ pl.plot_signal ( 3 ,pl.spaceX(signal ),signal ,'signal Hipass->lopass' ,'time' ,
 ans = f.fir ( pulse ,hipass )                   #aplico el filtrado al pulso para verificar que no este
 ans = f.fir ( ans   ,lopass )                   #recortando demasiado
 pl.plot_signal ( 4 ,pl.spaceX(ans    ),ans    ,'pulse Hipass->lopass'  ,'time' ,'mvolt' ,trace='-' )
-
-
+#==============================================================================
 
 groupDelay  = hipass.size//2+lopass.size//2     #calculo el retado basado en el largo de la respuesta al impulso de cada filtro
 signal      = signal[groupDelay+1:]             #demoro la senial original dicaha cantirdad,lo previo es descartado, notar el +!
@@ -59,13 +52,14 @@ pl.stem_signal  ( 2 ,pl.spaceX(ans) ,ans ,'bytes tecnca umbral' ,'time' ,'dato' 
 print(f"tecnica umbral=\n{ans}")                                      #muestra los resultados
 
 ans=np.zeros(0)
+ans2=np.zeros(0)
 for i in range(signal.size//pulse.size):
     ans=np.append(ans,np.correlate(signal[i*pulse.size:(i+1)*pulse.size],pulse))
 
 ans[ans>=0] = 1                                 #digitalizo la senial con un comparador
 ans[ans<0]  = 0
 ans         = np.uint8(ans)                     #lo necesito apra empaquetar luego a bytes
-pl.plot_signal  ( 3 ,pl.spaceX(ans),ans ,'bits tecnica correlacion' , 'time' ,'dato'  ,trace='-' )
+pl.stem_signal  ( 3 ,pl.spaceX(ans),ans ,'bits tecnica correlacion' , 'time' ,'dato'  ,trace='.' )
 ans = np.packbits(ans)                          #empaqueto de 8 por comodidad
 pl.stem_signal  ( 4 ,pl.spaceX(ans),ans ,'bytes tecnica correlacion' , 'time' ,'dato'  ,trace='.' )
 print(f"tecnica correlacion=\n{ans}")                                      #muestra los resultados
