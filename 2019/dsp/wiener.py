@@ -1,8 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import patches
-from matplotlib.figure import Figure
-from matplotlib import rcParams
 
 class wiener_class:
 
@@ -20,8 +16,7 @@ class wiener_class:
 #simplemente calcula la matriz hermitica de otra matriz, para hacer mas legible el codigo y 
 #reutilizar la funcion repetidamente, si entra MxN sale NxM
     def calcHermitica(self,aH):
-#        return (np.atleast_2d(aH).T).conjugate()   #siendo numeros reales podria evitarse la conjugacion
-        return aH.transpose()
+        return aH.transpose().conjugate()
 
 #calcula la matriz phi de autocorrelacion, basado en la matriz hermitica, es un calculo simple
 # pero de nuevo se lo define como funcion por modularidad, el resultado sera una matriz de MxM
@@ -42,4 +37,6 @@ class wiener_class:
     def e(self,aH,d):
         return self.calcHermitica(d)@d - self.w(aH,d)@self.z(aH,d)
 
-
+#calcula la estimacion del filtro Mx1
+    def D(self,aH,w):
+        return self.calcHermitica(aH)@w
