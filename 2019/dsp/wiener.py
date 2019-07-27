@@ -40,3 +40,14 @@ class wiener_class:
 #calcula la estimacion del filtro Mx1
     def D(self,aH,w):
         return self.calcHermitica(aH)@w
+
+#defino una funcion que usando todas las anteriores realiza el filtrado y devuelve la
+#estimacion y el error
+    def filter(self,u,d,t,M):
+        ah  = self.generateAHermitica ( u  ,M )
+        phi = self.phi                ( ah    )
+        z   = self.z                  ( ah ,d )
+        w   = self.w                  ( ah ,d )
+        D   = self.D                  ( ah ,w )
+        e   = self.e                  ( ah ,d )
+        return D,e
