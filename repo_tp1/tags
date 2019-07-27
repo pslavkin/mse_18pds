@@ -1,0 +1,35 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+N	tp1.py	/^N  = 1024$/;"	v
+__init__	dft.py	/^    def __init__(self):$/;"	m	class:dft_class
+__init__	plotter.py	/^    def __init__(self,row,col):$/;"	m	class:plotter_class
+a0	tp1.py	/^a0 = 1$/;"	v
+abs	dft.py	/^    def abs(self, fs, N, signal):$/;"	m	class:dft_class
+dft_c	tp1.py	/^dft_c = dft_class     (     )$/;"	v
+dft_class	dft.py	/^class dft_class:$/;"	c
+f0	tp1.py	/^f0 = 9*fs\/\/N$/;"	v
+fs	tp1.py	/^fs = 20$/;"	v
+full	dft.py	/^    def full(self, fs, N, signal):$/;"	m	class:dft_class
+inv_fft	dft.py	/^    def inv_fft(self, fs, N, signal):$/;"	m	class:dft_class
+max_bin	dft.py	/^    def max_bin(self,fs, fft):$/;"	m	class:dft_class
+pl	tp1.py	/^pl    = plotter_class ( 2,2 )$/;"	v
+plot_close	plotter.py	/^    def plot_close(self):$/;"	m	class:plotter_class
+plot_draw	plotter.py	/^    def plot_draw(self,pause):$/;"	m	class:plotter_class
+plot_hist	plotter.py	/^    def plot_hist(self, pos=1, x=1, y=1, title="", xLabel="", yLabel="", about='',trace='.'):$/;"	m	class:plotter_class
+plot_show	plotter.py	/^    def plot_show(self):$/;"	m	class:plotter_class
+plot_signal	plotter.py	/^    def plot_signal(self, pos=1, x=1, y=1, title="", xLabel="", yLabel="", about='',trace='.',center=0,zoom=0):$/;"	m	class:plotter_class
+plotter_class	plotter.py	/^class plotter_class:$/;"	c
+power_adjacent	dft.py	/^    def power_adjacent(self, fs, fft,f0):$/;"	m	class:dft_class
+power_bin	dft.py	/^    def power_bin(self, fs, fft,f0):$/;"	m	class:dft_class
+power_total	dft.py	/^    def power_total(self, fs, fft,f0):$/;"	m	class:dft_class
+power_total_except_bin	dft.py	/^    def power_total_except_bin(self, fs, fft,f0):$/;"	m	class:dft_class
+pulse	tp1.py	/^pulse  = np.load('pulse.npy')$/;"	v
+signal	tp1.py	/^signal = np.load('signal.npy')$/;"	v
+stem_signal	plotter.py	/^    def stem_signal(self, pos, x, y, title, xLabel, yLabel, about='',trace='.',center=0,zoom=0):$/;"	m	class:plotter_class
+t_pulse	tp1.py	/^t_pulse=np.linspace(0,pulse.size,pulse.size)$/;"	v
+t_signal	tp1.py	/^t_signal=np.linspace(0,signal.size,signal.size)$/;"	v
+zplane	zplane.py	/^def zplane(b,a,filename=None):$/;"	f
