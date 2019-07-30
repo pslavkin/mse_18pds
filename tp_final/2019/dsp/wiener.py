@@ -5,12 +5,12 @@ class wiener_class:
     def __init__(self):
         return
 # genera la matriz A hermitica basada en el vector de entrada Nx1 y el numero de coeficientes M
-# elegido. resultando en una matriz de M filas y N (N-M+1) columnas
+# elegido. resultando en una matriz de M filas y N (N-M) columnas
     def generateAHermitica(self,u,M):
-        N=u.size-M+1
-        aH=np.zeros((M,N))
+        col=u.size-M
+        aH=np.zeros((M,col))
         for i in range(M):
-            aH[i]=u[M-i-1:M-i-1+N]
+            aH[i]=u[M-i:M-i+col]
         return aH
 
 #simplemente calcula la matriz hermitica de otra matriz, para hacer mas legible el codigo y 

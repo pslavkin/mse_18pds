@@ -29,7 +29,7 @@ def run(u,U):
     #ver como baja el error a medida que el filtro crece
     eM=np.zeros(Mmax-Mmin)
     for i in range(Mmin,Mmax):
-        d             = U[i-1:]
+        d             = U[i:]
         DD,eM[i-Mmin] = wiener.filter(u,d,t,i)
     teM=np.linspace(Mmin,Mmax,Mmax-Mmin)
 
@@ -38,19 +38,19 @@ def run(u,U):
     eNoise=[]
     varNoise=np.linspace(noiseMin,noiseMax,100)
     for i in varNoise:
-        d    = U[M-1:]
+        d    = U[M:]
         DD,e = wiener.filter(U+i*noise,d,t,M)
         eNoise.append(e)
 
     #la senial deseada la tomo M posiciones a posteriori de la original ya que el filtro tarda M taps en predecir
-    d   = U[M-1:]
+    d   = U[M:]
     #ejecuto el filtro y guardo el vector estimado D y tambien el error
     D,e = wiener.filter ( u,d,t,M  )
     #agrego ceros en la primera arte del vector estimado y del deseado para que sean
     #coincidentes con el vector original de entrada y tambien para que tengan la misma longitud
     #que t y se pueda visualizar todo sobre la misma escala temporal
-    D   = np.pad ( D,(M-1,0 ),'constant')
-    d   = np.pad ( d,(M-1,0 ),'constant')
+    D   = np.pad ( D,(M,0 ),'constant')
+    d   = np.pad ( d,(M,0 ),'constant')
     #dibujo las curvas
     pl  = plotter_class ( 3,2 )
     pl.plot_signal ( 1 ,t        ,u      ,'input [u]'                   ,'time'  ,'amplitud' ,trace='-'                         )
